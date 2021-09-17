@@ -1,0 +1,7 @@
+{
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "typescript.preferences.importModuleSpecifierEnding": "js",
+  "editor.formatOnSave": false,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2
+}

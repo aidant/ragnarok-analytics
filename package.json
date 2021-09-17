@@ -1,0 +1,15 @@
+{
+  "workspaces": {
+    "packages": [
+      "./packages/*"
+    ]
+  },
+  "scripts": {
+    "build:api": "npm --workspace @ragnarok-analytics/api run build",
+    "build:app": "npm --workspace @ragnarok-analytics/app run build",
+    "build:bot": "npm --workspace @ragnarok-analytics/bot run build",
+    "start:api": "npm --workspace @ragnarok-analytics/api run start",
+    "start:app": "npm --workspace @ragnarok-analytics/app run start",
+    "start:bot": "npm --workspace @ragnarok-analytics/bot run start"
+  }
+}

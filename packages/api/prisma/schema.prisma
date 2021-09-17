@@ -1,0 +1,57 @@
+datasource sqlite {
+  provider = "sqlite"
+  url      = "file:../data/ragnarok-analytics.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@ragnarok-analytics/sdk-prisma"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../node_modules/@ragnarok-analytics/sdk-typeql"
+}
+
+model Event {
+  eventId          Int       @id @default(autoincrement())
+  eventLabel       String?
+  eventCreatedAt   DateTime  @default(now())
+  eventCompletedAt DateTime?
+
+  games Game[]
+}
+
+model Game {
+  eventId           Int
+  gameId            Int       @id @default(autoincrement())
+  gameMap           String?
+  gameWinningTeamId Int?
+  gameCreatedAt     DateTime  @default(now())
+  gameCompletedAt   DateTime?
+
+  event   Event    @relation(fields: [eventId], references: [eventId], onDelete: Cascade, onUpdate: Cascade)
+  players Player[]
+}
+
+model Member {
+  memberId              Int    @id @default(autoincrement())
+  memberDiscordId       String @unique(map: "sqlite_autoindex_Members_1")
+  memberDiscordAvatar   String
+  memberDiscordUsername String
+
+  players Player[]
+}
+
+model Player {
+  gameId          Int
+  memberId        Int
+  playerId        Int      @id @default(autoincrement())
+  playerTeamId    Int
+  playerCreatedAt DateTime @default(now())
+
+  game   Game   @relation(fields: [gameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
+  member Member @relation(fields: [memberId], references: [memberId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@unique([gameId, memberId, playerTeamId], map: "sqlite_autoindex_Players_1")
+}
