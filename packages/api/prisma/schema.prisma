@@ -49,6 +49,7 @@ model Player {
   playerId        Int      @id @default(autoincrement())
   playerTeamId    Int
   playerCreatedAt DateTime @default(now())
+  playerStarred   Boolean  @default(false)
 
   game   Game   @relation(fields: [gameId], references: [gameId], onDelete: Cascade, onUpdate: Cascade)
   member Member @relation(fields: [memberId], references: [memberId], onDelete: Cascade, onUpdate: Cascade)
