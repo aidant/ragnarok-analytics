@@ -6,7 +6,7 @@
 
 <div class="flex flex-row items-center gap-2">
   <img
-    class="rounded-full w-10 h-10 bg-black dark:bg-white"
+    class="rounded-full w-10 h-10"
     alt={member.memberDiscordUsername}
     src={member.memberDiscordAvatar}
   />

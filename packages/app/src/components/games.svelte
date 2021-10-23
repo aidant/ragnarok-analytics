@@ -9,9 +9,9 @@
 </script>
 
 <Overview {players} />
-<ul>
+<ul class='mt-12 flex flex-col gap-12'>
   {#each games as game}
-    <li class='border rounded-md p-2 my-2'>
+    <li class='border rounded-md p-2'>
       <Game {game} />
     </li>
   {/each}

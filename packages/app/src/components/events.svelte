@@ -5,9 +5,9 @@
   export let events: TEvent[]
 </script>
 
-<ul class="container mx-auto">
+<ul class="container mx-auto flex flex-col gap-20 mt-6">
   {#each events as event}
-    <li class='border rounded-md px-8 py-6 my-2'>
+    <li class='border rounded-md px-8 py-6'>
       <Event {event} />
     </li>
   {/each}

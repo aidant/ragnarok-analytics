@@ -24,7 +24,7 @@
 <div class='border rounded-lg p-4 mt-2'>
   <div class='flex flex-row justify-between'>
     <span class='text-lg mb-2 block'>Overview</span>
-    <select class='border rounded-lg py-2' bind:value={selection}>
+    <select class='border rounded-lg py-2 dark:bg-black' bind:value={selection}>
       <option value='history'>History</option>
       <option value='recently-spectated'>Recently Spectated</option>
       <option value='most-spectated'>Most Spectated</option>
