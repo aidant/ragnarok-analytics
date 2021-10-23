@@ -1,6 +1,6 @@
 import { get, writable } from 'svelte/store'
-import { query } from 'svelte-apollo'
 import { gql, ApolloClient, HttpLink, ApolloLink, InMemoryCache, concat } from '@apollo/client/core'
+import { getAccessToken } from '@lazy/oauth2-implicit-grant-client'
 
 const httpLink = new HttpLink({ uri: 'https://ragnarok-analytics.api.aidan.pro/' })
 
@@ -25,7 +25,7 @@ export interface Event {
   eventLabel: string | null
   eventCreatedAt: string
   eventCompletedAt: string | null
-  
+
   games: Game[]
 }
 
@@ -36,7 +36,7 @@ export interface Game {
   gameWinningTeamId: number | null
   gameCreatedAt: string
   gameCompletedAt: string | null
-  
+
   players: Player[]
 }
 
@@ -57,41 +57,75 @@ export interface Member {
   memberDiscordUsername: string
 }
 
-export const getEvents = () => query<{ events: Event[] }>(gql`
-  query {
-    events(orderBy: { eventCreatedAt: desc }) {
-      eventId
-      eventLabel
-      eventCreatedAt
-      eventCompletedAt
-      
-      games {
-        eventId
-        gameId
-        gameMap
-        gameWinningTeamId
-        gameCreatedAt
-        gameCompletedAt
-        
-        players {
-          gameId
-          memberId
-          playerId
-          playerTeamId
-          playerCreatedAt
+export const getEvents = ({ retry = true } = {}) =>
+  client
+    .query({
+      fetchPolicy: 'network-only',
+      query: gql`
+        query {
+          events(orderBy: { eventCreatedAt: desc }) {
+            eventId
+            eventLabel
+            eventCreatedAt
+            eventCompletedAt
 
-          member {
-            memberId
-            memberDiscordId
-            memberDiscordAvatar
-            memberDiscordUsername
+            games {
+              eventId
+              gameId
+              gameMap
+              gameWinningTeamId
+              gameCreatedAt
+              gameCompletedAt
+
+              players {
+                gameId
+                memberId
+                playerId
+                playerTeamId
+                playerCreatedAt
+
+                member {
+                  memberId
+                  memberDiscordId
+                  memberDiscordAvatar
+                  memberDiscordUsername
+                }
+              }
+            }
           }
         }
+      `,
+    })
+    .then(
+      response => events.set(response.data.events),
+      async error => {
+        if (retry) {
+          await handleLogin()
+          return getEvents({ retry: false })
+        } else {
+          throw error
+        }
       }
-    }
-  }
-`)
+    )
+
+export const handleLogin = async () => {
+  const accessToken = await getAccessToken('https://discord.com/api/oauth2/authorize', {
+    prompt: 'none',
+    client_id: '886418657616486450',
+    scope: 'identify',
+    redirect_uri: 'https://ragnarok-analytics.app.aidan.pro/',
+  }).catch(() =>
+    getAccessToken('https://discord.com/api/oauth2/authorize', {
+      client_id: '886418657616486450',
+      scope: 'identify',
+      redirect_uri: 'https://ragnarok-analytics.app.aidan.pro/',
+    })
+  )
+
+  token.set(accessToken)
+}
 
 export const token = writable('')
 export const time = writable(new Date())
+export const events = writable<Event[]>([])
 setInterval(() => time.set(new Date()), 1000)

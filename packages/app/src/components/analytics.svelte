@@ -1,12 +1,9 @@
 <script lang="ts">
-  import { setClient } from 'svelte-apollo'
   import Events from './events.svelte'
-  import { client, getEvents } from '../store'
+  import { events, getEvents } from '../store'
 
-  setClient(client)
-
-  const events = getEvents()
-  setInterval(() => events.refetch(), 1000)
+  getEvents()
+  setInterval(() => getEvents(), 1000 * 15)
 </script>
 
-<Events events={$events.data?.events || []} />
+<Events events={$events} />

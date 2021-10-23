@@ -24,7 +24,6 @@
     "@apollo/client": "^3.4.13",
     "@lazy/oauth2-implicit-grant-client": "^1.0.0-rc.2",
     "pretty-ms": "^7.0.1",
-    "s-ago": "^2.2.0",
-    "svelte-apollo": "^0.4.0"
+    "s-ago": "^2.2.0"
   }
 }
