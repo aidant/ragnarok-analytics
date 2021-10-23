@@ -46,6 +46,7 @@ export interface Player {
   playerId: number
   playerTeamId: number
   playerCreatedAt: string
+  playerStarred: boolean | null
 
   member: Member
 }
@@ -83,6 +84,7 @@ export const getEvents = ({ retry = true } = {}) =>
                 playerId
                 playerTeamId
                 playerCreatedAt
+                playerStarred
 
                 member {
                   memberId
@@ -108,24 +110,49 @@ export const getEvents = ({ retry = true } = {}) =>
       }
     )
 
+export const setPlayerStarred = async (playerId: number, playerStarred: boolean) => {
+  await client.mutate({
+    mutation: gql`
+      mutation setPlayerStarred(
+        $playerId: Int!
+        $playerStarred: Boolean!
+      ) {
+        updatePlayer(
+          data: { playerStarred: { set: $playerStarred } }
+          where: { playerId: $playerId }
+        ) {
+          playerId
+        }
+      }
+    `,
+    variables: { playerId, playerStarred }
+  })
+
+  await getEvents()
+}
+
 export const handleLogin = async () => {
   const accessToken = await getAccessToken('https://discord.com/api/oauth2/authorize', {
     prompt: 'none',
     client_id: '886418657616486450',
     scope: 'identify',
-    redirect_uri: 'https://ragnarok-analytics.app.aidan.pro/',
+    // redirect_uri: 'https://ragnarok-analytics.app.aidan.pro/',
+    redirect_uri: 'http://localhost:3000/',
   }).catch(() =>
     getAccessToken('https://discord.com/api/oauth2/authorize', {
       client_id: '886418657616486450',
       scope: 'identify',
-      redirect_uri: 'https://ragnarok-analytics.app.aidan.pro/',
+      // redirect_uri: 'https://ragnarok-analytics.app.aidan.pro/',
+      redirect_uri: 'http://localhost:3000/',
     })
   )
 
   token.set(accessToken)
 }
 
-export const token = writable('')
+export const token = writable(localStorage.getItem('token'))
 export const time = writable(new Date())
 export const events = writable<Event[]>([])
+
+token.subscribe($token => localStorage.setItem('token', $token))
 setInterval(() => time.set(new Date()), 1000)

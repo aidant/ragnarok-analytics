@@ -4,6 +4,8 @@
   import Games from './games.svelte'
 
   export let event: Event
+
+  $: sortedGames = [...event.games].sort((a, b) => new Date(b.gameCreatedAt).getTime() - new Date(a.gameCreatedAt).getTime())
 </script>
 
 <div class="flex flex-row justify-between">
@@ -11,4 +13,4 @@
   <Time createdAt={event.eventCreatedAt} completedAt={event.eventCompletedAt} />
 </div>
 
-<Games games={[...event.games].sort((a, b) => new Date(b.gameCreatedAt).getTime() - new Date(a.gameCreatedAt).getTime())} />
+<Games games={sortedGames} />

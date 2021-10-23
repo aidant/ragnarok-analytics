@@ -5,9 +5,9 @@
 
   export let game: Game
 
-  const spectators = game.players.filter(player => player.playerTeamId === 0)
-  const team1 = game.players.filter(player => player.playerTeamId === 1)
-  const team2 = game.players.filter(player => player.playerTeamId === 2)
+  $: spectators = game.players.filter(player => player.playerTeamId === 0)
+  $: team1 = game.players.filter(player => player.playerTeamId === 1)
+  $: team2 = game.players.filter(player => player.playerTeamId === 2)
 </script>
 
 <div class="flex flex-row justify-between">

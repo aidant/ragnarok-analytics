@@ -5,7 +5,7 @@
 
   export let games: TGame[]
   
-  const players = games.flatMap(game => game.players)
+  $: players = games.flatMap(game => game.players)
 </script>
 
 <Overview {players} />
