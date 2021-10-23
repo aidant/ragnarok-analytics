@@ -136,14 +136,14 @@ export const handleLogin = async () => {
     prompt: 'none',
     client_id: '886418657616486450',
     scope: 'identify',
-    // redirect_uri: 'https://ragnarok-analytics.app.aidan.pro/',
-    redirect_uri: 'http://localhost:3000/',
+    redirect_uri: 'https://ragnarok-analytics.app.aidan.pro/',
+    // redirect_uri: 'http://localhost:3000/',
   }).catch(() =>
     getAccessToken('https://discord.com/api/oauth2/authorize', {
       client_id: '886418657616486450',
       scope: 'identify',
-      // redirect_uri: 'https://ragnarok-analytics.app.aidan.pro/',
-      redirect_uri: 'http://localhost:3000/',
+      redirect_uri: 'https://ragnarok-analytics.app.aidan.pro/',
+      // redirect_uri: 'http://localhost:3000/',
     })
   )
 
