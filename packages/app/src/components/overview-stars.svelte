@@ -7,9 +7,6 @@
 
   $: overview = Object.values(
     players
-      .filter(player => {
-        return player.playerStarred
-      })
       .sort((a, b) => new Date(a.playerCreatedAt).getTime() - new Date(b.playerCreatedAt).getTime())
       .reduce((overview, player) => {
         overview[player.memberId] ??= { member: player.member, players: [] }
@@ -37,7 +34,9 @@
     <Member member={overview.member} />
     <div class='flex flex-row'>
       {#each overview.players as player}
-        <Star playerStarred={player.playerStarred} />
+        {#if player.playerStarred}
+          <Star playerStarred={player.playerStarred} />
+        {/if}
       {/each}
     </div>
   </div>
