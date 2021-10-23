@@ -4,7 +4,7 @@
 
   export let players: TPlayer[]
 
-  const overview = Object.values(
+  $: overview = Object.values(
     players
       .sort((a, b) => new Date(a.playerCreatedAt).getTime() - new Date(b.playerCreatedAt).getTime())
       .reduce((overview, player) => {

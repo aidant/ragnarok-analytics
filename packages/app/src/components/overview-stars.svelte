@@ -1,11 +1,15 @@
 <script lang='ts'>
   import type { Player as TPlayer, Member as TMember } from '../store'
   import Member from './member.svelte'
+  import Star from './star.svelte'
 
   export let players: TPlayer[]
 
   $: overview = Object.values(
     players
+      .filter(player => {
+        return player.playerStarred
+      })
       .sort((a, b) => new Date(a.playerCreatedAt).getTime() - new Date(b.playerCreatedAt).getTime())
       .reduce((overview, player) => {
         overview[player.memberId] ??= { member: player.member, players: [] }
@@ -33,7 +37,7 @@
     <Member member={overview.member} />
     <div class='flex flex-row'>
       {#each overview.players as player}
-        <img src="./game-{player.playerTeamId === 0 ? 'spectated' : 'played'}.svg" />
+        <Star playerStarred={player.playerStarred} />
       {/each}
     </div>
   </div>

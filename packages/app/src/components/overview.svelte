@@ -3,6 +3,7 @@
   import OverviewHistory from './overview-history.svelte'
   import OverviewRecentlySpectated from './overview-recently-spectated.svelte'
   import OverviewMostSpectated from './overview-most-spectated.svelte'
+  import OverviewStars from './overview-stars.svelte'
 
   export let players: TPlayer[]
 
@@ -18,6 +19,9 @@
     case 'most-spectated':
       component = OverviewMostSpectated
       break
+    case 'stars':
+      component = OverviewStars
+      break
   }
 </script>
 
@@ -28,6 +32,7 @@
       <option value='history'>History</option>
       <option value='recently-spectated'>Recently Spectated</option>
       <option value='most-spectated'>Most Spectated</option>
+      <option value='stars'>Stars</option>
     </select>
   </div>
   <svelte:component this={component} {players} />
