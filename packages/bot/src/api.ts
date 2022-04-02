@@ -1,4 +1,4 @@
-import { gql, ApolloClient, InMemoryCache } from '@apollo/client/core/core.cjs.js'
+import { ApolloClient, gql, InMemoryCache } from '@apollo/client/core/core.cjs.js'
 import { DISCORD_TOKEN } from './environment.js'
 import { logger } from './logger.js'
 

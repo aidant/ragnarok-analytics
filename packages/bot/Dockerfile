@@ -7,5 +7,7 @@ RUN npm install --force && \
 
 FROM node:16-alpine
 WORKDIR /app
-COPY --from=builder /app/lib /app/node_modules /app/package.json ./
+COPY --from=builder /app/lib /app/lib
+COPY --from=builder /app/node_modules /app/node_modules
+COPY --from=builder /app/package.json /app/package.json  
 CMD node lib/entrypoint.js
