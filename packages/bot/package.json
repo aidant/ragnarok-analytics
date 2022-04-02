@@ -9,6 +9,7 @@
   "type": "module",
   "dependencies": {
     "@apollo/client": "^3.4.12",
+    "debug": "^4.3.2",
     "discord.js": "^13.1.0",
     "dotenv": "^10.0.0",
     "isomorphic-fetch": "^3.0.0",
