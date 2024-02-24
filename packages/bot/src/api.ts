@@ -1,12 +1,12 @@
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client/core/core.cjs'
-import { DISCORD_TOKEN } from './environment.js'
+import { API_URL, DISCORD_TOKEN } from './environment.js'
 import { logger } from './logger.js'
 
 const log = logger('api')
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: 'https://ragnarok-analytics.api.aidan.pro/',
+  uri: API_URL,
   headers: {
     Authorization: `Bot ${DISCORD_TOKEN}`
   }
