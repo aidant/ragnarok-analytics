@@ -1,4 +1,4 @@
-import { Client, Collection, GuildMember, Intents } from 'discord.js'
+import { Client, Collection, GatewayIntentBits, GuildMember, OAuth2Scopes } from 'discord.js'
 import { on, once } from 'events'
 import {
   CHANNEL_ID_LOBBY,
@@ -12,7 +12,7 @@ import { logger } from './logger.js'
 const log = logger('state:discord')
 
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
 })
 
 export interface Member {
@@ -47,9 +47,9 @@ export const getDiscordState = async (): Promise<DiscordState> => {
   ])
 
   const state: DiscordState = {
-    lobby: getMemberList(lobby!.members),
-    team1: getMemberList(team1!.members),
-    team2: getMemberList(team2!.members),
+    lobby: getMemberList(lobby!.members as Collection<string, GuildMember>),
+    team1: getMemberList(team1!.members as Collection<string, GuildMember>),
+    team2: getMemberList(team2!.members as Collection<string, GuildMember>),
   }
   log(state)
   return state
@@ -59,4 +59,4 @@ export const onDiscordStateChange = () => on(client, 'voiceStateUpdate')
 
 await client.login(DISCORD_TOKEN)
 await once(client, 'ready')
-console.log(client.generateInvite({ scopes: ['bot'] }))
+console.log(client.generateInvite({ scopes: [OAuth2Scopes.Bot] }))
