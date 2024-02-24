@@ -4,6 +4,8 @@ const invalid = (name: string): never => {
 
 export const isProduction = process.env.NODE_ENV === 'production'
 
+export const API_URL = process.env.API_URL || 'https://ragnarok-analytics.api.aidan.pro/'
+
 export const DISCORD_TOKEN = process.env.DISCORD_TOKEN || invalid('DISCORD_TOKEN')
 
 export const GUILD_ID = process.env.GUILD_ID || invalid('GUILD_ID')
