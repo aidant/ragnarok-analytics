@@ -14,7 +14,7 @@
     "class-validator": "^0.14.1",
     "debug": "^4.3.4",
     "dotenv": "^16.4.5",
-    "graphql": "^16.8.1",
+    "graphql": "^15.3.0",
     "isomorphic-fetch": "^3.0.0",
     "reflect-metadata": "^0.2.1",
     "source-map-support": "^0.5.21",
