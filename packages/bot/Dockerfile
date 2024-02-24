@@ -1,7 +1,7 @@
 FROM node:20-alpine as builder
 WORKDIR /app
 COPY . .
-RUN npm ci && \
+RUN npm install && \
   npm run build && \
   npm prune --production
 
