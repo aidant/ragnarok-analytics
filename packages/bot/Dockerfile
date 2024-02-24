@@ -10,4 +10,4 @@ WORKDIR /app
 COPY --from=builder /app/lib /app/lib
 COPY --from=builder /app/node_modules /app/node_modules
 COPY --from=builder /app/package.json /app/package.json
-CMD node lib/entrypoint.js
+CMD node --enable-source-maps lib/entrypoint.js

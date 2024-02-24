@@ -1,12 +1,10 @@
 import 'dotenv/config.js'
-import 'source-map-support/register.js'
 import 'isomorphic-fetch'
 import { distinctUntilChanged, from, map, mergeMap, pairwise, startWith } from 'rxjs'
-import { DiscordState, getDiscordState, onDiscordStateChange } from './discord.js'
-import { getRagnarokState, RagnarokState } from './ragnarok.js'
-import { handleStateChange } from './database.js'
-import { users } from './users.js'
 import { eachValueFrom } from 'rxjs-for-await'
+import { handleStateChange } from './database.js'
+import { DiscordState, getDiscordState, onDiscordStateChange } from './discord.js'
+import { RagnarokState, getRagnarokState } from './ragnarok.js'
 
 export interface State {
   discord: DiscordState

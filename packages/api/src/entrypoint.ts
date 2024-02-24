@@ -1,17 +1,17 @@
 import 'dotenv/config.js'
-import 'reflect-metadata'
-import 'source-map-support/register.js'
 import 'isomorphic-fetch'
+import 'reflect-metadata'
+
 import { PrismaClient } from '@ragnarok-analytics/sdk-prisma'
 import { resolvers } from '@ragnarok-analytics/sdk-typeql'
+import { ApolloServer, AuthenticationError } from 'apollo-server'
 import {
   ApolloServerPluginLandingPageDisabled,
   ApolloServerPluginLandingPageGraphQLPlayground
 } from 'apollo-server-core'
 import { buildSchema } from 'type-graphql'
-import { AUTHORIZED_USERS, HOST, isProduction, PORT } from './environment.js'
+import { AUTHORIZED_USERS, HOST, PORT, isProduction } from './environment.js'
 import { log } from './logger.js'
-import { ApolloServer, AuthenticationError } from 'apollo-server'
 
 const prisma = new PrismaClient()
 
@@ -23,7 +23,7 @@ const { url } = await new ApolloServer({
         throw new AuthenticationError('Missing Authorisation Token.')
       }
 
-      const response = await fetch('https://discord.com/api/v9/users/@me', {
+      const response = await fetch('https://discord.com/api/v10/users/@me', {
         headers: { Authorization: req.headers.authorization },
       })
 
@@ -32,7 +32,7 @@ const { url } = await new ApolloServer({
       }
 
       const json = await response.json()
-      
+
       if (!AUTHORIZED_USERS.includes(json.id)) {
         throw new AuthenticationError('Unauthorized.')
       }

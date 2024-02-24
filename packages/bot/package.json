@@ -14,8 +14,7 @@
     "dotenv": "^16.4.5",
     "isomorphic-fetch": "^3.0.0",
     "rxjs": "^7.8.1",
-    "rxjs-for-await": "^1.0.0",
-    "source-map-support": "^0.5.21"
+    "rxjs-for-await": "^1.0.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.12",

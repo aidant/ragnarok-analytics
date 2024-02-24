@@ -1,6 +1,6 @@
-import { get, writable } from 'svelte/store'
-import { gql, ApolloClient, HttpLink, ApolloLink, InMemoryCache, concat } from '@apollo/client/core'
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, concat, gql } from '@apollo/client/core'
 import { getAccessToken } from '@lazy/oauth2-implicit-grant-client'
+import { get, writable } from 'svelte/store'
 
 const httpLink = new HttpLink({ uri: 'https://ragnarok-analytics.api.aidan.pro/' })
 
@@ -128,7 +128,7 @@ export const setPlayerStarred = async (playerId: number, playerStarred: boolean)
     variables: { playerId, playerStarred }
   })
 
-  await getEvents()
+  await getEvents({ retry: false })
 }
 
 export const handleLogin = async () => {
